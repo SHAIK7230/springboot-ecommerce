@@ -1,0 +1,25 @@
+﻿{
+  "name": "Spring Boot & React eCommerce",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "true"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "forwardPorts": [8080, 5173],
+  "portsAttributes": {
+    "8080": {
+      "label": "Spring Boot API",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "React Vite Frontend",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "cd ecom-frontend && cp .env.example .env && npm install"
+}

@@ -1,4 +1,4 @@
-﻿# 🛒 Full-Stack Spring Boot & React E-Commerce Platform
+# 🛒 Full-Stack Spring Boot & React E-Commerce Platform
 
 [![Java](https://img.shields.io/badge/Java-23-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4+-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
@@ -10,6 +10,23 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 > A modern, production-grade e-commerce application engineered with **Spring Boot 3 (REST API)** on the backend and **React 18 + Vite** on the frontend. Features complete user authentication with JWT, role-based access control (Admin, Seller, Customer), inventory & stock tracking, a 4-step interactive checkout flow with multi-method payment support (Cash on Delivery, UPI QR code, Credit/Debit Card, and Stripe), and a responsive store interface formatted in **Indian Rupees (₹)** with high-resolution product photography.
+
+---
+
+## ⚡ 1-Click Instant Cloud Demo (Run & Test Online)
+
+Interviewers and recruiters can test the application live in the cloud without installing Java, Maven, or Node.js locally:
+
+| Platform | Direct Launch Link | Setup Time |
+| :--- | :--- | :--- |
+| **GitHub Codespaces** | [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/SHAIK7230/springboot-ecommerce) | ~1 min (Pre-configured) |
+| **Gitpod** | [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/SHAIK7230/springboot-ecommerce) | ~1 min |
+
+> 💡 **Quick Run in Codespaces / Cloud Terminal**:
+> 1. Click **[Open in GitHub Codespaces](https://codespaces.new/SHAIK7230/springboot-ecommerce)**.
+> 2. Start the Backend API: `cd sb-ecom && ./mvnw spring-boot:run`
+> 3. Start the Frontend Store: `cd ecom-frontend && npm run dev`
+> 4. Preview opens automatically at port `5173`!
 
 ---
 
