@@ -13,20 +13,33 @@
 
 ---
 
-## ⚡ 1-Click Instant Cloud Demo (Run & Test Online)
+## 🌐 Live Access & Instant Cloud Demo (Run & Test Online)
 
-Interviewers and recruiters can test the application live in the cloud without installing Java, Maven, or Node.js locally:
+Interviewers and recruiters can test the application live in the cloud or deploy their own instance with one click:
+
+### 1. Instant 1-Click Interactive Browser Sandbox
+Run the full application directly inside your browser without installing Java, Maven, or Node.js:
 
 | Platform | Direct Launch Link | Setup Time |
 | :--- | :--- | :--- |
 | **GitHub Codespaces** | [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/SHAIK7230/springboot-ecommerce) | ~1 min (Pre-configured) |
 | **Gitpod** | [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/SHAIK7230/springboot-ecommerce) | ~1 min |
 
-> 💡 **Quick Run in Codespaces / Cloud Terminal**:
+> 💡 **Quick Run in Codespaces**:
 > 1. Click **[Open in GitHub Codespaces](https://codespaces.new/SHAIK7230/springboot-ecommerce)**.
-> 2. Start the Backend API: `cd sb-ecom && ./mvnw spring-boot:run`
-> 3. Start the Frontend Store: `cd ecom-frontend && npm run dev`
+> 2. Terminal 1 (Backend): `cd sb-ecom && ./mvnw spring-boot:run`
+> 3. Terminal 2 (Frontend): `cd ecom-frontend && npm run dev`
 > 4. Preview opens automatically at port `5173`!
+
+---
+
+### 2. 1-Click Live Cloud Deployment (Free 24/7 Public URL)
+Deploy the full-stack app (Spring Boot API + React Frontend) to free cloud hosting:
+
+| Service | 1-Click Deploy Link | Description |
+| :--- | :--- | :--- |
+| **Render (Full-Stack)** | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SHAIK7230/springboot-ecommerce) | Deploys both Spring Boot REST API & React Vite Frontend via `render.yaml` blueprint |
+| **Vercel (Frontend)** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SHAIK7230/springboot-ecommerce&root-directory=ecom-frontend) | Deploys React frontend with SPA rewrites |
 
 ---
 

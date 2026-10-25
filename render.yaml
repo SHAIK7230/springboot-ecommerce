@@ -1,0 +1,32 @@
+﻿services:
+  # 1. Spring Boot REST API
+  - type: web
+    name: sb-ecom-api
+    runtime: java
+    plan: free
+    region: oregon
+    buildCommand: cd sb-ecom && ./mvnw clean package -DskipTests
+    startCommand: cd sb-ecom && java -jar target/sb-ecom-0.0.1-SNAPSHOT.jar
+    healthCheckPath: /api/public/categories
+    envVars:
+      - key: PORT
+        value: 8080
+
+  # 2. React Vite Frontend
+  - type: web
+    name: ecom-frontend
+    runtime: static
+    plan: free
+    region: oregon
+    buildCommand: cd ecom-frontend && npm install && npm run build
+    staticPublishPath: ecom-frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_BACK_END_URL
+        fromService:
+          type: web
+          name: sb-ecom-api
+          property: host
