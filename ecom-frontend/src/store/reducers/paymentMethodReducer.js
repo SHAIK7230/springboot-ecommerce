@@ -1,5 +1,5 @@
 const initialState = {
-    paymentMethod: null,
+    paymentMethod: "Cash on Delivery",
 };
 
 export const paymentMethodReducer = (state = initialState, action) => {

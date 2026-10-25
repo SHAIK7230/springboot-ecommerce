@@ -1,0 +1,29 @@
+# IDE / Editor files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backend (Maven / Java / H2)
+sb-ecom/target/
+sb-ecom/data/
+**/target/
+**/data/
+*.log
+
+# Frontend (Node / Vite)
+ecom-frontend/node_modules/
+ecom-frontend/dist/
+ecom-frontend/.env
+ecom-frontend/.env.local
+**/node_modules/
+
+# Test / Scratch files
+test_checkout.ps1
+scratch/
+sb-ecom/src/main/resources/Springboot/

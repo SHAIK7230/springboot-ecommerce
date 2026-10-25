@@ -49,22 +49,20 @@ const UserMenu = () => {
           }}
         >
 
-          <Link to="/profile">
-            <MenuItem className="flex gap-2" 
-                onClick={handleClose}>
-                    <BiUser className='text-xl'/>
-                    <span className='font-bold text-[16px] mt-1'>
-                        {user?.username}
-                    </span>
-            </MenuItem>
-          </Link>
+          <MenuItem className="flex gap-2 cursor-default" 
+              onClick={handleClose}>
+                  <BiUser className='text-xl text-blue-600'/>
+                  <span className='font-bold text-[16px]'>
+                      {user?.username}
+                  </span>
+          </MenuItem>
 
-          <Link to="/profile/orders">
+          <Link to="/cart">
             <MenuItem className="flex gap-2" 
                 onClick={handleClose}>
-                    <FaShoppingCart className='text-xl'/>
+                    <FaShoppingCart className='text-xl text-slate-700'/>
                     <span className='font-semibold'>
-                        Order
+                        My Cart
                     </span>
             </MenuItem>
           </Link>

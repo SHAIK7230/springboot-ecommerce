@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatPriceCalculation } from '../../utils/formatPrice'
+import { formatPrice, formatPriceCalculation } from '../../utils/formatPrice'
 
 const OrderSummary = ({ totalPrice, cart, address, paymentMethod}) => {
   return (
@@ -48,18 +48,14 @@ const OrderSummary = ({ totalPrice, cart, address, paymentMethod}) => {
             <h2 className='text-2xl font-semibold mb-2'>Order Items</h2>
             <div className='space-y-2'>
                 {cart?.map((item) => (
-                    <div key={item?.productId} className='flex items-center'>
-                        <img src={`${import.meta.env.VITE_BACK_END_URL}/images/${
-                            item?.image
-                        }`}
-                        alt='Product'
-                        className='w-12 h-12 rounded-sm'></img>
+                    <div key={item?.productId} className='flex items-center gap-3'>
+                        <img src={item?.image?.startsWith("http") ? item?.image : `${import.meta.env.VITE_BACK_END_URL}/images/${item?.image}`}
+                        alt={item?.productName || 'Product'}
+                        className='w-12 h-12 object-cover rounded-sm'></img>
                     <div className='text-gray-500'>
-                        <p>{item?.productName}</p>
+                        <p className='font-medium text-slate-800'>{item?.productName}</p>
                         <p>
-                {item?.quantity} x ${item?.specialPrice} = ${
-                    formatPriceCalculation(item?.quantity, item?.specialPrice)
-                }
+                {item?.quantity} x {formatPrice(item?.specialPrice)} = {formatPrice(formatPriceCalculation(item?.quantity, item?.specialPrice))}
                         </p>
                     </div>
                     </div>
@@ -77,15 +73,15 @@ const OrderSummary = ({ totalPrice, cart, address, paymentMethod}) => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Products</span>
-                <span>${formatPriceCalculation(totalPrice, 1)}</span>
+                <span>{formatPrice(totalPrice)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Tax (0%)</span>
-                <span>$0.00</span>
+                <span>{formatPrice(0)}</span>
               </div>
               <div className="flex justify-between font-semibold">
                 <span>SubTotal</span>
-                <span>${formatPriceCalculation(totalPrice, 1)}</span>
+                <span>{formatPrice(totalPrice)}</span>
               </div>
             </div>
         </div>

@@ -10,6 +10,8 @@ import PaymentMethod from './PaymentMethod';
 import OrderSummary from './OrderSummary';
 import StripePayment from './StripePayment';
 import PaypalPayment from './PaypalPayment';
+import DirectPayment from './DirectPayment';
+import { createUserCart } from '../../store/actions';
 
 const Checkout = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -20,6 +22,10 @@ const Checkout = () => {
         (state) => state.auth
     )
     const { paymentMethod } = useSelector((state) => state.payment);
+
+    const calculatedTotal = totalPrice > 0
+        ? totalPrice
+        : cart?.reduce((acc, cur) => acc + Number(cur?.specialPrice || cur?.price) * Number(cur?.quantity), 0);
 
     const handleBack = () => {
         setActiveStep((prevStep) => prevStep - 1);
@@ -32,7 +38,7 @@ const Checkout = () => {
         }
 
         if(activeStep === 1 && (!selectedUserCheckoutAddress || !paymentMethod)) {
-            toast.error("Please select payment address before proceeding.");
+            toast.error("Please select a payment method before proceeding.");
             return;
         }
         
@@ -47,7 +53,15 @@ const Checkout = () => {
     ];
     
     useEffect(() => {
+        dispatch({ type: "IS_SUCCESS" });
         dispatch(getUserAddresses());
+        if (cart?.length > 0) {
+            const sendCartItems = cart.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+            }));
+            dispatch(createUserCart(sendCartItems));
+        }
     }, [dispatch]);
 
   return (
@@ -69,16 +83,16 @@ const Checkout = () => {
                 {activeStep === 0 && <AddressInfo address={address} />}
                 {activeStep === 1 && <PaymentMethod />}
                 {activeStep === 2 && <OrderSummary 
-                                        totalPrice={totalPrice}
+                                        totalPrice={calculatedTotal}
                                         cart={cart}
                                         address={selectedUserCheckoutAddress}
-                                        paymentMethod={paymentMethod}/>}
+                                        paymentMethod={paymentMethod || "Cash on Delivery"}/>}
                 {activeStep === 3 && 
                     <>
                         {paymentMethod === "Stripe" ? (
                             <StripePayment />
                         ) : (
-                            <PaypalPayment />
+                            <DirectPayment paymentMethod={paymentMethod || "Cash on Delivery"} />
                         )}
                     </>}
             </div>

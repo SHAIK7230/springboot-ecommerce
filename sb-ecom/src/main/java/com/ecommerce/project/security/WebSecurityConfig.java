@@ -1,8 +1,12 @@
 package com.ecommerce.project.security;
 
 import com.ecommerce.project.model.AppRole;
+import com.ecommerce.project.model.Category;
+import com.ecommerce.project.model.Product;
 import com.ecommerce.project.model.Role;
 import com.ecommerce.project.model.User;
+import com.ecommerce.project.repositories.CategoryRepository;
+import com.ecommerce.project.repositories.ProductRepository;
 import com.ecommerce.project.repositories.RoleRepository;
 import com.ecommerce.project.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +118,11 @@ public class WebSecurityConfig {
 
 
     @Bean
-    public CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner initData(RoleRepository roleRepository,
+                                     UserRepository userRepository,
+                                     CategoryRepository categoryRepository,
+                                     ProductRepository productRepository,
+                                     PasswordEncoder passwordEncoder) {
         return args -> {
             // Retrieve or create roles
             Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
@@ -171,6 +179,130 @@ public class WebSecurityConfig {
                 admin.setRoles(adminRoles);
                 userRepository.save(admin);
             });
+
+            // Seed Sample Categories and Products for Demo
+            if (categoryRepository.count() == 0 || productRepository.count() == 0) {
+                Category electronics = categoryRepository.findByCategoryName("Electronics");
+                if (electronics == null) {
+                    electronics = new Category();
+                    electronics.setCategoryName("Electronics");
+                    electronics = categoryRepository.save(electronics);
+                }
+
+                Category fashion = categoryRepository.findByCategoryName("Fashion");
+                if (fashion == null) {
+                    fashion = new Category();
+                    fashion.setCategoryName("Fashion");
+                    fashion = categoryRepository.save(fashion);
+                }
+
+                Category home = categoryRepository.findByCategoryName("Home & Living");
+                if (home == null) {
+                    home = new Category();
+                    home.setCategoryName("Home & Living");
+                    home = categoryRepository.save(home);
+                }
+
+                User seller = userRepository.findByUserName("seller1").orElse(null);
+
+                productRepository.deleteAll();
+
+                Product p1 = new Product();
+                p1.setProductName("Wireless Noise-Canceling Headphones");
+                p1.setDescription("Premium wireless over-ear headphones with active noise cancellation and 30-hour battery life.");
+                p1.setQuantity(20);
+                p1.setPrice(4999.0);
+                p1.setDiscount(15.0);
+                p1.setSpecialPrice(4249.0);
+                p1.setImage("headphones.jpg");
+                p1.setCategory(electronics);
+                p1.setUser(seller);
+                productRepository.save(p1);
+
+                Product p2 = new Product();
+                p2.setProductName("Smart Fitness Watch");
+                p2.setDescription("Water-resistant fitness tracker with heart rate monitor, GPS, and vibrant AMOLED display.");
+                p2.setQuantity(35);
+                p2.setPrice(2999.0);
+                p2.setDiscount(10.0);
+                p2.setSpecialPrice(2699.0);
+                p2.setImage("smartwatch.jpg");
+                p2.setCategory(electronics);
+                p2.setUser(seller);
+                productRepository.save(p2);
+
+                Product p3 = new Product();
+                p3.setProductName("Ultra-Slim Pro Laptop");
+                p3.setDescription("Fast and lightweight 14-inch laptop with Intel Core processor, 16GB RAM, and 512GB SSD.");
+                p3.setQuantity(10);
+                p3.setPrice(54999.0);
+                p3.setDiscount(10.0);
+                p3.setSpecialPrice(49499.0);
+                p3.setImage("laptop.jpg");
+                p3.setCategory(electronics);
+                p3.setUser(seller);
+                productRepository.save(p3);
+
+                Product p4 = new Product();
+                p4.setProductName("4K Mirrorless Digital Camera");
+                p4.setDescription("Professional 24MP digital camera with 4K video recording, dual stabilization, and Wi-Fi.");
+                p4.setQuantity(8);
+                p4.setPrice(42999.0);
+                p4.setDiscount(12.0);
+                p4.setSpecialPrice(37839.0);
+                p4.setImage("camera.jpg");
+                p4.setCategory(electronics);
+                p4.setUser(seller);
+                productRepository.save(p4);
+
+                Product p5 = new Product();
+                p5.setProductName("Classic Denim Jacket");
+                p5.setDescription("Durable, stylish blue denim trucker jacket with comfortable regular fit.");
+                p5.setQuantity(15);
+                p5.setPrice(1899.0);
+                p5.setDiscount(20.0);
+                p5.setSpecialPrice(1519.0);
+                p5.setImage("denim_jacket.jpg");
+                p5.setCategory(fashion);
+                p5.setUser(seller);
+                productRepository.save(p5);
+
+                Product p6 = new Product();
+                p6.setProductName("Athletic Running Shoes");
+                p6.setDescription("Breathable, lightweight cushioned running sneakers engineered for peak comfort and endurance.");
+                p6.setQuantity(25);
+                p6.setPrice(3499.0);
+                p6.setDiscount(15.0);
+                p6.setSpecialPrice(2974.0);
+                p6.setImage("running_shoes.jpg");
+                p6.setCategory(fashion);
+                p6.setUser(seller);
+                productRepository.save(p6);
+
+                Product p7 = new Product();
+                p7.setProductName("Ergonomic Mesh Office Chair");
+                p7.setDescription("Breathable mesh desk chair with adjustable lumbar support, headrest, and 3D armrests.");
+                p7.setQuantity(12);
+                p7.setPrice(8499.0);
+                p7.setDiscount(10.0);
+                p7.setSpecialPrice(7649.0);
+                p7.setImage("office_chair.jpg");
+                p7.setCategory(home);
+                p7.setUser(seller);
+                productRepository.save(p7);
+
+                Product p8 = new Product();
+                p8.setProductName("Modern Travel Backpack");
+                p8.setDescription("Water-resistant laptop travel backpack with USB charging port and anti-theft compartments.");
+                p8.setQuantity(30);
+                p8.setPrice(1499.0);
+                p8.setDiscount(25.0);
+                p8.setSpecialPrice(1124.0);
+                p8.setImage("backpack.jpg");
+                p8.setCategory(fashion);
+                p8.setUser(seller);
+                productRepository.save(p8);
+            }
         };
     }
 

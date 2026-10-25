@@ -169,10 +169,16 @@ export const addUpdateUserAddress =
     */
     dispatch({ type:"BUTTON_LOADER" });
     try {
+        let savedAddr = null;
         if (!addressId) {
             const { data } = await api.post("/addresses", sendData);
+            savedAddr = data;
         } else {
-            await api.put(`/addresses/${addressId}`, sendData);
+            const { data } = await api.put(`/addresses/${addressId}`, sendData);
+            savedAddr = data;
+        }
+        if (savedAddr) {
+            dispatch(selectUserCheckoutAddress(savedAddr));
         }
         dispatch(getUserAddresses());
         toast.success("Address saved successfully");
@@ -317,6 +323,30 @@ export const stripePaymentConfirmation
             setErrorMesssage("Payment Failed. Please try again.");
         }
 };
+
+export const placeDirectOrderAction =
+    (paymentMethod, sendData, navigate, toast) => async (dispatch) => {
+        try {
+            dispatch({ type: "BUTTON_LOADER" });
+            const response = await api.post(`/order/users/payments/${paymentMethod}`, sendData);
+            if (response.data) {
+                localStorage.removeItem("CHECKOUT_ADDRESS");
+                localStorage.removeItem("cartItems");
+                localStorage.removeItem("client-secret");
+                dispatch({ type: "REMOVE_CLIENT_SECRET_ADDRESS" });
+                dispatch({ type: "CLEAR_CART" });
+                toast.success("Order Placed Successfully!");
+                navigate(`/order-confirm?order_id=${response.data.orderId}&payment_method=${encodeURIComponent(paymentMethod)}&status=success`);
+            } else {
+                toast.error("Failed to place order. Please try again.");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error?.response?.data?.message || "Failed to place order. Please try again.");
+        } finally {
+            dispatch({ type: "IS_SUCCESS" });
+        }
+    };
 
 export const analyticsAction = () => async (dispatch, getState) => {
         try {
